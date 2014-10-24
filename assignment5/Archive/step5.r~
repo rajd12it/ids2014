@@ -1,0 +1,37 @@
+# Step 5: Evaluate the decision tree on the test data
+
+# Use predict function
+predictA=predict(modelA,newdata=testing)
+# print/parse as string
+str(predictA)
+
+# Test pop for all pop values and load to resultA
+pop_testA=c()
+pop_names=c("crypto","nano","pico","synecho","ultra")
+for (i in 1:nrow(predictA)){
+        pop_testA=c(pop_testA,pop_names[which.max(predictA[i,])])
+        } 
+resultA=as.vector(testing$pop)==pop_testA
+# print as a table
+table(resultA)
+
+#results are below
+#resultA
+#FALSE  TRUE 
+#5187 30984 
+
+# simple/aternative way
+accuracyA=sum(resultA)/length(pop_testA)
+# predictA2
+predictA2=predict(modelA,newdata=testing,type= "class")
+table(predictA2, testing$pop)
+
+#predictA2 crypto nano pico synecho ultra
+  #crypto       0    0    0       0     0
+  #nano        51 4977    0      16   637
+  #pico         0    3 9391      16  1936
+  #synecho      0   34   38    9041   120
+  #ultra        0 1335 1001       0  7575
+
+
+
